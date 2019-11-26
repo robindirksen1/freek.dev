@@ -38,6 +38,22 @@ class PostTest extends TestCase
     }
 
     /** @test */
+    public function it_can_redirects_an_incorrect_id_slug_to_an_id_slug()
+    {
+        $this
+            ->get(action(PostController::class, $this->post->idSlug().'-incorrect'))
+            ->assertRedirect(action(PostController::class, $this->post->idSlug()));
+    }
+
+    /** @test */
+    public function it_can_redirects_an_incorrect_id_slug_to_an_id_slug_when_capital()
+    {
+        $this
+            ->get(action(PostController::class, strtoupper($this->post->idSlug())))
+            ->assertRedirect(action(PostController::class, $this->post->idSlug()));
+    }
+
+    /** @test */
     public function it_will_return_a_404_for_an_invalid_slug()
     {
         $this
